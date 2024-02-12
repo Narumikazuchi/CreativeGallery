@@ -1,0 +1,1 @@
+For a detailed description of all the contents of the library and their usage visit the [wiki](https://github.com/Narumikazuchi/Common/wiki) page.
