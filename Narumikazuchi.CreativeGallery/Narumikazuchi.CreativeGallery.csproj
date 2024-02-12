@@ -37,7 +37,6 @@
 		<Using Include="System.ComponentModel" />
 		<Using Include="System.Data" />
 		<Using Include="System.Data.Common" />
-		<Using Include="System.Data.SQLite" />
 		<Using Include="System.Diagnostics" />
 		<Using Include="System.Diagnostics.CodeAnalysis" />
 		<Using Include="System.Diagnostics.Contracts" />

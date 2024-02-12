@@ -1,0 +1,30 @@
+﻿@page "/"
+
+@using Microsoft.AspNetCore.Components.Web
+@using Narumikazuchi.CreativeGallery.Core
+
+@namespace Narumikazuchi.CreativeGallery.Pages
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <base href="~/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="Narumikazuchi.CreativeGallery.styles.css" rel="stylesheet" />
+    <link href="_content/PSC.Blazor.Components.AutoComplete/css/autocomplete.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+</head>
+
+<body>
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/PSC.Blazor.Components.AutoComplete/js/autocomplete.js"></script>
+</body>
+
+</html>
