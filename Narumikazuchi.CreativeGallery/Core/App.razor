@@ -1,12 +1,21 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-    <NotFound>
-        <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link href="Narumikazuchi.CreativeGallery.styles.css" rel="stylesheet" />
+    <link href="_content/PSC.Blazor.Components.AutoComplete/css/autocomplete.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="Logo.png" />
+    <HeadOutlet />
+</head>
+
+<body>
+    <Routing />
+    <script src="_framework/blazor.web.js"></script>
+    <script src="_content/PSC.Blazor.Components.AutoComplete/js/autocomplete.js"></script>
+</body>
+
+</html>
