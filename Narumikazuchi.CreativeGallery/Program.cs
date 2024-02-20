@@ -9,6 +9,9 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args: args);
 builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
+builder.Services.AddWorkingDirectory();
+builder.Services.AddDatabase(configuration: builder.Configuration);
+
 WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment() is false)
@@ -17,6 +20,8 @@ if (app.Environment.IsDevelopment() is false)
                             createScopeForErrors: true);
     app.UseHsts();
 }
+
+app.RunInitialSetup();
 
 app.UseHttpsRedirection();
 
