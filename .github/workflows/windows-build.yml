@@ -3,7 +3,7 @@ name: windows build
 on: [push]
 
 jobs:
-  tests:
+  build:
 
     runs-on: windows-latest
     strategy:
