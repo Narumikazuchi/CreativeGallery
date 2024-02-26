@@ -1,4 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@using Narumikazuchi.CreativeGallery.Localization;
+
+@inherits LayoutComponentBase
+
+@inject Translator Translator
 
 <div class="banner">
     <Header />
@@ -9,7 +13,7 @@
 </main>
 
 <div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
+    @Translator["common.unhandled-error"]
+    <a href="" class="reload">@Translator["common.reload"]</a>
     <a class="dismiss">🗙</a>
 </div>
