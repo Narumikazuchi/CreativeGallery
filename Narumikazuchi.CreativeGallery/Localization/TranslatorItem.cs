@@ -1,6 +1,6 @@
 ﻿namespace Narumikazuchi.CreativeGallery.Localization;
 
-public sealed class TranslatorItem
+public readonly struct TranslatorItem
 {
     public required CultureInfo Culture
     {

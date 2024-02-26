@@ -7,7 +7,7 @@ public abstract class DatabaseContext : IDisposable
         this.Context = context;
     }
 
-    public void SaveChanges()
+    public virtual void SaveChanges()
     {
         _ = this.Context.SaveChanges();
     }

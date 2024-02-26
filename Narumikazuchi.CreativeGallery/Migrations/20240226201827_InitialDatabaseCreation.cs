@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Narumikazuchi.CreativeGallery.Migrations;
 
 /// <inheritdoc />
-public partial class InitialCreate : Migration
+public partial class InitialDatabaseCreation : Migration
 {
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,11 +38,27 @@ public partial class InitialCreate : Migration
             });
 
         migrationBuilder.CreateTable(
+            name: "SearchQuery",
+            columns: table => new
+            {
+                Identifier = table.Column<Guid>(type: "TEXT", nullable: false),
+                Value = table.Column<string>(type: "TEXT", nullable: false),
+                Count = table.Column<uint>(type: "INTEGER", nullable: false),
+                Type = table.Column<int>(type: "INTEGER", nullable: false),
+                ExtraParameters = table.Column<string>(type: "TEXT", nullable: false)
+            },
+            constraints: table =>
+            {
+                table.PrimaryKey("PK_SearchQuery", x => x.Identifier);
+            });
+
+        migrationBuilder.CreateTable(
             name: "Tags",
             columns: table => new
             {
                 Identifier = table.Column<Guid>(type: "TEXT", nullable: false),
                 Name = table.Column<string>(type: "TEXT", nullable: false),
+                Rating = table.Column<int>(type: "INTEGER", nullable: false),
                 CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
             },
             constraints: table =>
@@ -60,7 +76,8 @@ public partial class InitialCreate : Migration
                 Email = table.Column<string>(type: "TEXT", nullable: false),
                 Visibility = table.Column<int>(type: "INTEGER", nullable: false),
                 CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                LastModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                LastModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                ProfilePicture = table.Column<byte[]>(type: "BLOB", nullable: false)
             },
             constraints: table =>
             {
@@ -102,14 +119,14 @@ public partial class InitialCreate : Migration
                 Visibility = table.Column<int>(type: "INTEGER", nullable: false),
                 CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                 LastModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                OwnerId = table.Column<Guid>(type: "TEXT", nullable: false)
+                OwnerIdentifier = table.Column<Guid>(type: "TEXT", nullable: false)
             },
             constraints: table =>
             {
                 table.PrimaryKey("PK_Albums", x => x.Identifier);
                 table.ForeignKey(
-                    name: "FK_Albums_Users_OwnerId",
-                    column: x => x.OwnerId,
+                    name: "FK_Albums_Users_OwnerIdentifier",
+                    column: x => x.OwnerIdentifier,
                     principalTable: "Users",
                     principalColumn: "Identifier",
                     onDelete: ReferentialAction.Cascade);
@@ -144,14 +161,14 @@ public partial class InitialCreate : Migration
                 Visibility = table.Column<int>(type: "INTEGER", nullable: false),
                 CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                 LastModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
-                OwnerId = table.Column<Guid>(type: "TEXT", nullable: false)
+                OwnerIdentifier = table.Column<Guid>(type: "TEXT", nullable: false)
             },
             constraints: table =>
             {
                 table.PrimaryKey("PK_CreativeWorks", x => x.Identifier);
                 table.ForeignKey(
-                    name: "FK_CreativeWorks_Users_OwnerId",
-                    column: x => x.OwnerId,
+                    name: "FK_CreativeWorks_Users_OwnerIdentifier",
+                    column: x => x.OwnerIdentifier,
                     principalTable: "Users",
                     principalColumn: "Identifier",
                     onDelete: ReferentialAction.Cascade);
@@ -359,9 +376,9 @@ public partial class InitialCreate : Migration
             });
 
         migrationBuilder.CreateIndex(
-            name: "IX_Albums_OwnerId",
+            name: "IX_Albums_OwnerIdentifier",
             table: "Albums",
-            column: "OwnerId");
+            column: "OwnerIdentifier");
 
         migrationBuilder.CreateIndex(
             name: "IX_Authentications_UserIdentifier",
@@ -369,9 +386,9 @@ public partial class InitialCreate : Migration
             column: "UserIdentifier");
 
         migrationBuilder.CreateIndex(
-            name: "IX_CreativeWorks_OwnerId",
+            name: "IX_CreativeWorks_OwnerIdentifier",
             table: "CreativeWorks",
-            column: "OwnerId");
+            column: "OwnerIdentifier");
 
         migrationBuilder.CreateIndex(
             name: "IX_RestrictedByPermissions_AllowedForIdentifier",
@@ -382,6 +399,11 @@ public partial class InitialCreate : Migration
             name: "IX_RestrictedByPermissions_AllowsIdentifier",
             table: "RestrictedByPermissions",
             column: "AllowsIdentifier");
+
+        migrationBuilder.CreateIndex(
+            name: "IX_SearchQuery_Value",
+            table: "SearchQuery",
+            column: "Value");
 
         migrationBuilder.CreateIndex(
             name: "IX_UserBookmarkedAlbums_BookmarkedAlbumsIdentifier",
@@ -467,6 +489,9 @@ public partial class InitialCreate : Migration
 
         migrationBuilder.DropTable(
             name: "RestrictedByPermissions");
+
+        migrationBuilder.DropTable(
+            name: "SearchQuery");
 
         migrationBuilder.DropTable(
             name: "UserBookmarkedAlbums");

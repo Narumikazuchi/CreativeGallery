@@ -12,7 +12,11 @@ public sealed class GlobalDatabaseContext : DbContext
     public GlobalDatabaseContext(DbContextOptions<GlobalDatabaseContext> options) :
         base(options: options)
     {
+        if (s_HasMigrated is false)
+        {
         this.Database.Migrate();
+            s_HasMigrated = true;
+    }
     }
 
     public DbSet<AuthenticationModel> Authentications
@@ -114,6 +118,8 @@ public sealed class GlobalDatabaseContext : DbContext
                     .WithMany(entity => entity.Works)
                     .UsingEntity<CreativeWorkInAlbumModel>(joinEntityName: WORKS_IN_ALBUM_TABLE);
     }
+
+    static private Boolean s_HasMigrated = false;
 
     private const String RESTRICTED_BY_PERMISSIONS_TABLE = "RestrictedByPermissions";
     private const String USER_PERMISSIONS_TABLE = "UserPermissions";

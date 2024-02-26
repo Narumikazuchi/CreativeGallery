@@ -10,7 +10,7 @@ builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
 builder.Services.AddWorkingDirectory();
-builder.Services.AddTranslation();
+builder.Services.AddCoreServices();
 builder.Services.AddDatabase(configuration: builder.Configuration);
 
 WebApplication app = builder.Build();
@@ -22,7 +22,7 @@ if (app.Environment.IsDevelopment() is false)
     app.UseHsts();
 }
 
-app.RunInitialSetup();
+await app.RunInitialSetupAsynchronously();
 
 app.UseHttpsRedirection();
 
