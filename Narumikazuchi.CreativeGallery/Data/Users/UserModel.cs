@@ -58,6 +58,12 @@ public sealed record class UserModel
         set;
     } = DateTime.Now;
 
+    public required Byte[] ProfilePicture
+    {
+        get;
+        set;
+    }
+
     public List<AuthenticationModel> Authentications
     {
         get;
