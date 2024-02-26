@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Narumikazuchi.CreativeGallery.Data;
 using Narumikazuchi.CreativeGallery.Data.Search;
 using Narumikazuchi.CreativeGallery.Data.Users;
+using Narumikazuchi.CreativeGallery.Localization;
 
 namespace Narumikazuchi.CreativeGallery.Infrastructure;
 
@@ -42,6 +43,11 @@ static public class ServiceCollectionExtensions
                                                      optionsLifetime: ServiceLifetime.Transient);
         services.AddTransient<UserDatabaseContext>();
         services.AddTransient<SearchDatabaseContext>();
+    }
+
+    static public void AddTranslation(this IServiceCollection services)
+    {
+        services.AddSingleton<Translator>();
     }
 
     private const String DATABASE_KEY = "Database";

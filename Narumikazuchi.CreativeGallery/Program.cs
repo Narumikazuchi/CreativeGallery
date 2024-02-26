@@ -10,6 +10,7 @@ builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
 builder.Services.AddWorkingDirectory();
+builder.Services.AddTranslation();
 builder.Services.AddDatabase(configuration: builder.Configuration);
 
 WebApplication app = builder.Build();
