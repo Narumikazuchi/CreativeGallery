@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Narumikazuchi.CreativeGallery.Authentication;
 using Narumikazuchi.CreativeGallery.Data;
 using Narumikazuchi.CreativeGallery.Data.Search;
 using Narumikazuchi.CreativeGallery.Data.Users;
@@ -45,9 +46,10 @@ static public class ServiceCollectionExtensions
         services.AddTransient<SearchDatabaseContext>();
     }
 
-    static public void AddTranslation(this IServiceCollection services)
+    static public void AddCoreServices(this IServiceCollection services)
     {
-        services.AddSingleton<Translator>();
+        services.AddTransient<Translator>();
+        services.AddTransient<UserProvider>();
     }
 
     private const String DATABASE_KEY = "Database";

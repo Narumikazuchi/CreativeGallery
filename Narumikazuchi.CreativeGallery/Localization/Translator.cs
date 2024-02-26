@@ -8,6 +8,13 @@ public sealed class Translator
     public Translator(IConfiguration configuration,
                       WorkingDirectory workingDirectory)
     {
+        if (s_Fallback is not null &&
+            s_Translations is not null)
+        {
+            this.CurrentLocale = s_Fallback;
+            return;
+        }
+
         IConfigurationSection section = configuration.GetSection(key: LOCALIZATION_KEY);
         Optional<String> fallbackValue = section.GetValue<String>(key: FALLBACK_KEY);
         if (fallbackValue.HasValue is false)
@@ -18,7 +25,7 @@ public sealed class Translator
         try
         {
             _ = new CultureInfo(name: fallbackValue.Value);
-            m_Fallback = fallbackValue.Value;
+            s_Fallback = fallbackValue.Value;
         }
         catch
         {
@@ -48,7 +55,7 @@ public sealed class Translator
                 if (translations.HasValue is true)
                 {
                     if (items.TryGetValue(key: translations.Value.Locale,
-                                          value: out TranslatorItem? item) is true)
+                                          value: out TranslatorItem item) is true)
                     {
                         item = new()
                         {
@@ -75,9 +82,9 @@ public sealed class Translator
             { }
         }
 
-        m_Translations = items.ToFrozenDictionary();
+        s_Translations = items.ToFrozenDictionary();
 
-        this.CurrentLocale = m_Fallback;
+        this.CurrentLocale = s_Fallback;
     }
 
     public String CurrentLocale
@@ -86,19 +93,40 @@ public sealed class Translator
         set;
     }
 
+    public CultureInfo CurrentCulture
+    {
+        get
+        {
+            if (s_Translations.TryGetValue(key: this.CurrentLocale,
+                                           value: out TranslatorItem item) is true)
+            {
+                return item.Culture;
+            }
+            else if (s_Translations.TryGetValue(key: s_Fallback,
+                                                   value: out item) is true)
+            {
+                return item.Culture;
+            }
+            else
+            {
+                return new (name: s_Fallback);
+            }
+        }
+    }
+
     public String this[String key]
     {
         get
         {
-            if (m_Translations.TryGetValue(key: this.CurrentLocale,
-                                           value: out TranslatorItem? item) is true)
+            if (s_Translations.TryGetValue(key: this.CurrentLocale,
+                                           value: out TranslatorItem item) is true)
             {
                 if (item.Translations.TryGetValue(key: key,
                                                   value: out String? value) is true)
                 {
                     return value;
                 }
-                else if(m_Translations.TryGetValue(key: m_Fallback,
+                else if(s_Translations.TryGetValue(key: s_Fallback,
                                                    value: out item) is true)
                 {
                     if (item.Translations.TryGetValue(key: key,
@@ -116,7 +144,7 @@ public sealed class Translator
                     return NO_TRANSLATION;
                 }
             }
-            else if (m_Translations.TryGetValue(key: m_Fallback,
+            else if (s_Translations.TryGetValue(key: s_Fallback,
                                                    value: out item) is true)
             {
                 if (item.Translations.TryGetValue(key: key,
@@ -136,8 +164,8 @@ public sealed class Translator
         }
     }
 
-    private readonly String m_Fallback;
-    private readonly FrozenDictionary<String, TranslatorItem> m_Translations;
+    static private String s_Fallback = null!;
+    static private FrozenDictionary<String, TranslatorItem> s_Translations = null!;
 
     private const String LOCALIZATION_KEY = "Localization";
     private const String FALLBACK_KEY = "Fallback";

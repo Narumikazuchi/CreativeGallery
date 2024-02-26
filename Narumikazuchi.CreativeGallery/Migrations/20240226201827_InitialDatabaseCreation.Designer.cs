@@ -7,13 +7,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Narumikazuchi.CreativeGallery.Data;
 
-#nullable disable
-
 namespace Narumikazuchi.CreativeGallery.Migrations;
 
 [DbContext(typeof(GlobalDatabaseContext))]
-[Migration("InitialCreate")]
-partial class InitialCreate
+[Migration("20240226201827_InitialDatabaseCreation")]
+partial class InitialDatabaseCreation
 {
     /// <inheritdoc />
     protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,7 +35,7 @@ partial class InitialCreate
                     .IsRequired()
                     .HasColumnType("TEXT");
 
-                b.Property<Guid>("OwnerId")
+                b.Property<Guid>("OwnerIdentifier")
                     .HasColumnType("TEXT");
 
                 b.Property<int>("Visibility")
@@ -45,7 +43,7 @@ partial class InitialCreate
 
                 b.HasKey("Identifier");
 
-                b.HasIndex("OwnerId");
+                b.HasIndex("OwnerIdentifier");
 
                 b.ToTable("Albums");
             });
@@ -66,7 +64,7 @@ partial class InitialCreate
                 b.Property<DateTime>("LastModifiedAt")
                     .HasColumnType("TEXT");
 
-                b.Property<Guid>("OwnerId")
+                b.Property<Guid>("OwnerIdentifier")
                     .HasColumnType("TEXT");
 
                 b.Property<int>("Visibility")
@@ -74,7 +72,7 @@ partial class InitialCreate
 
                 b.HasKey("Identifier");
 
-                b.HasIndex("OwnerId");
+                b.HasIndex("OwnerIdentifier");
 
                 b.ToTable("CreativeWorks");
             });
@@ -112,6 +110,33 @@ partial class InitialCreate
                 b.ToTable("RestrictionModel");
             });
 
+        modelBuilder.Entity("Narumikazuchi.CreativeGallery.Data.Search.SearchResultModel", b =>
+            {
+                b.Property<Guid>("Identifier")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("TEXT");
+
+                b.Property<uint>("Count")
+                    .HasColumnType("INTEGER");
+
+                b.Property<string>("ExtraParameters")
+                    .IsRequired()
+                    .HasColumnType("TEXT");
+
+                b.Property<int>("Type")
+                    .HasColumnType("INTEGER");
+
+                b.Property<string>("Value")
+                    .IsRequired()
+                    .HasColumnType("TEXT");
+
+                b.HasKey("Identifier");
+
+                b.HasIndex("Value");
+
+                b.ToTable("SearchQuery");
+            });
+
         modelBuilder.Entity("Narumikazuchi.CreativeGallery.Data.Tags.TagModel", b =>
             {
                 b.Property<Guid>("Identifier")
@@ -124,6 +149,9 @@ partial class InitialCreate
                 b.Property<string>("Name")
                     .IsRequired()
                     .HasColumnType("TEXT");
+
+                b.Property<int>("Rating")
+                    .HasColumnType("INTEGER");
 
                 b.HasKey("Identifier");
 
@@ -172,6 +200,10 @@ partial class InitialCreate
 
                 b.Property<DateTime>("LastModifiedAt")
                     .HasColumnType("TEXT");
+
+                b.Property<byte[]>("ProfilePicture")
+                    .IsRequired()
+                    .HasColumnType("BLOB");
 
                 b.Property<string>("Username")
                     .IsRequired()
@@ -391,7 +423,7 @@ partial class InitialCreate
             {
                 b.HasOne("Narumikazuchi.CreativeGallery.Data.Users.UserModel", "Owner")
                     .WithMany("OwnedAlbums")
-                    .HasForeignKey("OwnerId")
+                    .HasForeignKey("OwnerIdentifier")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 
@@ -402,7 +434,7 @@ partial class InitialCreate
             {
                 b.HasOne("Narumikazuchi.CreativeGallery.Data.Users.UserModel", "Owner")
                     .WithMany("OwnedWorks")
-                    .HasForeignKey("OwnerId")
+                    .HasForeignKey("OwnerIdentifier")
                     .OnDelete(DeleteBehavior.Cascade)
                     .IsRequired();
 

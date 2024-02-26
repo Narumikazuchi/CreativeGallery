@@ -129,6 +129,8 @@ public sealed class GlobalDatabaseContext : DbContext
                     .HasIndex(entity => entity.Value);
     }
 
+    static private Boolean s_HasMigrated = false;
+
     private const String RESTRICTED_BY_PERMISSIONS_TABLE = "RestrictedByPermissions";
     private const String USER_PERMISSIONS_TABLE = "UserPermissions";
     private const String USER_BOOKMARKED_ALBUMS_TABLE = "UserBookmarkedAlbums";
