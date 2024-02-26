@@ -70,7 +70,7 @@ public sealed record class CreativeWorkModel
         init;
     } = [];
 
-    public required Guid OwnerId
+    public Guid OwnerIdentifier
     {
         get;
         init;
