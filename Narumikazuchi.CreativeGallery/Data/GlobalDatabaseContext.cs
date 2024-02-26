@@ -2,6 +2,7 @@
 using Narumikazuchi.CreativeGallery.Data.Albums;
 using Narumikazuchi.CreativeGallery.Data.CreativeWorks;
 using Narumikazuchi.CreativeGallery.Data.Permissions;
+using Narumikazuchi.CreativeGallery.Data.Search;
 using Narumikazuchi.CreativeGallery.Data.Tags;
 using Narumikazuchi.CreativeGallery.Data.Users;
 
@@ -12,7 +13,11 @@ public sealed class GlobalDatabaseContext : DbContext
     public GlobalDatabaseContext(DbContextOptions<GlobalDatabaseContext> options) :
         base(options: options)
     {
-        this.Database.Migrate();
+        if (s_HasMigrated is false)
+        {
+            this.Database.Migrate();
+            s_HasMigrated = true;
+        }
     }
 
     public DbSet<AuthenticationModel> Authentications
@@ -51,6 +56,12 @@ public sealed class GlobalDatabaseContext : DbContext
         set;
     }
 
+    public DbSet<SearchResultModel> SearchQuery
+    {
+        get;
+        set;
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AuthenticationModel>()
@@ -70,13 +81,13 @@ public sealed class GlobalDatabaseContext : DbContext
         modelBuilder.Entity<UserModel>()
                     .HasMany(entity => entity.OwnedWorks)
                     .WithOne(entity => entity.Owner)
-                    .HasForeignKey(entity => entity.OwnerId)
+                    .HasForeignKey(entity => entity.OwnerIdentifier)
                     .HasPrincipalKey(entity => entity.Identifier);
 
         modelBuilder.Entity<UserModel>()
                     .HasMany(entity => entity.OwnedAlbums)
                     .WithOne(entity => entity.Owner)
-                    .HasForeignKey(entity => entity.OwnerId)
+                    .HasForeignKey(entity => entity.OwnerIdentifier)
                     .HasPrincipalKey(entity => entity.Identifier);
 
         modelBuilder.Entity<UserModel>()
@@ -113,6 +124,9 @@ public sealed class GlobalDatabaseContext : DbContext
                     .HasMany(entity => entity.PartOfAlbum)
                     .WithMany(entity => entity.Works)
                     .UsingEntity<CreativeWorkInAlbumModel>(joinEntityName: WORKS_IN_ALBUM_TABLE);
+
+        modelBuilder.Entity<SearchResultModel>()
+                    .HasIndex(entity => entity.Value);
     }
 
     private const String RESTRICTED_BY_PERMISSIONS_TABLE = "RestrictedByPermissions";
