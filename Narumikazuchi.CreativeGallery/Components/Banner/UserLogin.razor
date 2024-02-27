@@ -8,41 +8,83 @@
 
 @rendermode RenderMode.InteractiveServer
 
-<div class="account-menu">
+<div
+    class="account-menu"
+>
     <!-- User Account Menu -->
     @if (this.UserProvider.IsAuthenticatedUser is true)
     {
-        <div class="profile-icon" @onclick=@this.ToggleMenuOpen>
-            <img src="@this.ProfilePicture" />
+        <div
+            class="profile-icon"
+            @onclick=@this.ToggleMenuOpen
+            @onfocusout=@this.CloseMenu
+        >
+            <img
+                src="@this.ProfilePicture"
+            />
         </div>
-        <div class="profile-menu @this.IsActiveClass">
-            <div class="username">
-                <span>@this.Username</span>
+        <div
+            class="profile-menu @this.IsActiveClass"
+        >
+            <div
+                class="username"
+            >
+                <span>
+                    @this.Username
+                </span>
             </div>
             <ul>
                 @if (this.UserHasAdministrationAccess is true)
                 {
                     <li>
-                        <div @onclick=@this.RedirectToAdministration>@this.Translator["common.administration"]</div>
+                        <div
+                            @onclick=@this.RedirectToAdministration
+                        >
+                            @this.Translator["common.administration"]
+                        </div>
                     </li>
                 }
                 <li>
-                    <span @onclick=@this.RedirectToUserDashboard>@this.Translator["common.my-profile"]</span>
+                    <div
+                        @onclick=@this.RedirectToUserDashboard
+                    >
+                        @this.Translator["common.my-profile"]
+                    </div>
                 </li>
                 <li>
-                    <div @onclick=@this.RedirectToBookmarks>@this.Translator["common.bookmarks"]</div>
+                    <div
+                        @onclick=@this.RedirectToBookmarks
+                    >
+                        @this.Translator["common.bookmarks"]
+                    </div>
                 </li>
                 <li>
-                    <div @onclick=@this.RedirectToLiked>@this.Translator["common.liked"]</div>
+                    <div
+                        @onclick=@this.RedirectToLiked
+                    >
+                        @this.Translator["common.liked"]
+                    </div>
                 </li>
                 <li>
-                    <div @onclick=@this.RedirectToFollowedCreators>@this.Translator["common.followed-creators"]</div>
+                    <div
+                        @onclick=@this.RedirectToFollowedCreators
+                    >
+                        @this.Translator["common.followed-creators"]
+                    </div>
                 </li>
                 <li>
-                    <div @onclick=@this.RedirectToSettings>@this.Translator["common.settings"]</div>
+                    <div
+                        @onclick=@this.RedirectToSettings
+                    >
+                        @this.Translator["common.settings"]
+                    </div>
                 </li>
                 <li>
-                    <div @onclick=@this.Logout>@this.Translator["authentication.logout"]</div>
+                    <div
+                        @onclick=@this.Logout
+                    >
+                        @this.Translator["authentication.logout"]
+                    </div>
                 </li>
             </ul>
         </div>
@@ -51,8 +93,12 @@
     <!-- User Login -->
     @if (this.UserProvider.IsAuthenticatedUser is false)
     {
-        <button @onclick=@this.RedirectToLogin>
-            <span>@Translator["authentication.login"]</span>
+        <button
+            @onclick=@this.RedirectToLogin
+        >
+            <span>
+                @Translator["authentication.login"]
+            </span>
         </button>
     }
 </div>

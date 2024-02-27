@@ -10,10 +10,26 @@
     width: calc(100vw - 2rem);
 }
 
-div.banner .icon
+div.banner .icon,
+div.banner .icon > div
 {
     grid-area: icon;
     margin: auto 0;
+}
+
+div.banner .icon,
+div.banner .icon > div
+{
+    width: 4rem;
+    height: 4rem;
+}
+
+div.banner .icon > div > img
+{
+    cursor: pointer;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 
 div.banner .search-bar

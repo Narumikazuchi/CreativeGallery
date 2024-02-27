@@ -8,21 +8,34 @@
 
 @rendermode RenderMode.InteractiveServer
 
-<div class="search-input">
-    <input class="input-box" @oninput=@this.OnInputChanged />
-    <ol class="result-box @this.IsActiveClass">
+<div
+    class="search-input"
+>
+    <input
+        class="input-box"
+        @oninput=@this.OnInputChanged 
+    />
+    <ol
+        class="result-box @this.IsActiveClass"
+    >
         @if (m_Results.Count is 0) // TODO: Styling
         {
             <li>
-                <span>@this.Translator["search.no-results"]</span>
+                <span>
+                    @this.Translator["search.no-results"]
+                </span>
             </li>
         }
         else
         {
             @foreach (SearchResultModel result in m_Results)
             {
-                <li @onclick=@(() => this.HandleResultClick(result))>
-                    <span>@result.Value <i>@this.Translator[$"common:{result.Type.ToString().ToLowerInvariant()}"]</i> <span style="color: rgba(0, 0, 0, 0.4)">@result.Count</span></span>
+                <li
+                    @onclick=@(() => this.HandleResultClick(result))
+                >
+                    <span>
+                        @result.Value <i>@this.Translator[$"common:{result.Type.ToString().ToLowerInvariant()}"]</i> <span style="color: rgba(0, 0, 0, 0.4)">@result.Count</span>
+                    </span>
                 </li>
             }
         }

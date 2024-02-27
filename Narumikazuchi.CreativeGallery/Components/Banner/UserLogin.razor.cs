@@ -62,6 +62,11 @@ public sealed partial class UserLogin
         m_IsMenuOpen = !m_IsMenuOpen;
     }
 
+    private void CloseMenu()
+    {
+        m_IsMenuOpen = false;
+    }
+
     private Boolean UserHasAdministrationAccess
     {
         get;

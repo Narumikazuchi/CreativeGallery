@@ -1,8 +1,6 @@
-﻿using Narumikazuchi.CreativeGallery.Infrastructure;
+﻿namespace Narumikazuchi.CreativeGallery.Core;
 
-namespace Narumikazuchi.CreativeGallery.Components.Banner;
-
-public sealed partial class Header
+public sealed partial class AppLogoProvider
 {
     protected override void OnInitialized()
     {
@@ -27,11 +25,6 @@ public sealed partial class Header
         {
             return s_LogoData;
         }
-    }
-
-    private void RedirectToLandingPage()
-    {
-        this.Navigator.NavigateTo(uri: Routes.LANDING_PAGE);
     }
 
     static private String s_LogoData = String.Empty;

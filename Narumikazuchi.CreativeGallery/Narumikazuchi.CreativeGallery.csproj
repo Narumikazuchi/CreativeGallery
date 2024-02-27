@@ -21,10 +21,7 @@
 
 	<ItemGroup>
 		<None Include="../LICENSE" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="Empty.png">
+		<None Update="DefaultProfile.png">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
@@ -36,6 +33,10 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Narumikazuchi.CreativeGallery.Plugins\Narumikazuchi.CreativeGallery.Plugins.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -67,14 +68,6 @@
 		<Using Include="System.Text.RegularExpressions" />
 		<Using Include="System.Threading" />
 		<Using Include="System.Threading.Tasks" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\Narumikazuchi.CreativeGallery.Plugins\Narumikazuchi.CreativeGallery.Plugins.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Migrations\" />
 	</ItemGroup>
 
 </Project>

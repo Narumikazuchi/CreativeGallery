@@ -16,11 +16,10 @@ public sealed class UserDatabaseContext : DatabaseContext
     {
         if (user.ProfilePicture is null)
         {
-            await using FileStream stream = File.OpenRead("Empty.png");
+            await using FileStream stream = File.OpenRead(path: DEFAULT_PROFILE_FILENAME);
             Byte[] bytes = new Byte[stream.Length];
             _= await stream.ReadAsync(buffer: bytes,
                                       cancellationToken: cancellationToken);
-            String filenname = $"profile_{user.Identifier}.png";
             user.ProfilePicture = bytes;
         }
 
@@ -147,4 +146,6 @@ public sealed class UserDatabaseContext : DatabaseContext
                                                         cancellationToken: cancellationToken);
         }
     }
+
+    private const String DEFAULT_PROFILE_FILENAME = "DefaultProfile.png";
 }

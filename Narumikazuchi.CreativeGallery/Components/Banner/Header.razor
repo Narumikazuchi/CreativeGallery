@@ -1,13 +1,32 @@
 ﻿@using Narumikazuchi.CreativeGallery.Data.Search;
+@using Narumikazuchi.CreativeGallery.Infrastructure
 
-<div class="banner">
-    <span class="icon">
-        <img src="" alt="Logo" />
+@inject NavigationManager Navigator
+@inject WorkingDirectory Root
+
+<div
+    class="banner"
+>
+    <span
+        class="icon"
+    >
+        <div
+            @onclick=@this.RedirectToLandingPage
+        >
+            <img
+                src="@LogoData"
+                alt="Logo"
+            />
+        </div>
     </span>
-    <span class="search-bar">
+    <span
+        class="search-bar"
+    >
         <SearchInput />
     </span>
-    <span class="account">
+    <span
+        class="account"
+    >
         <UserLogin />
     </span>
 </div>
