@@ -12,26 +12,18 @@ internal sealed class Graphics :
             status = GdiPlus.GdipDeleteGraphics(handle: this.Handle);
             GdiPlus.ThrowIfFailed(status: status);
 
-            //if (_metafileHolder != null)
-            //{
-            //    var mh = _metafileHolder;
-            //    _metafileHolder = null;
-            //    mh.GraphicsDisposed();
-            //}
-
             m_IsDisposed = true;
         }
 
         GC.SuppressFinalize(obj: this);
     }
 
-    static internal Graphics FromImage(ImageFile image)
+    static internal Graphics FromImage(Bitmap image)
     {
         GdiPlusStatus status = GdiPlus.GdipGetImageGraphicsContext(handle: image.Handle,
                                                                    graphics: out IntPtr handle);
         GdiPlus.ThrowIfFailed(status: status);
-        Graphics result = new(handle: handle,
-                              image: image);
+        Graphics result = new(handle: handle);
         if (GdiPlus.UseLinuxDraw is true)
         {
             Rectangle rectangle = new(x: 0,
@@ -50,14 +42,9 @@ internal sealed class Graphics :
         get;
     }
 
-    private Graphics(IntPtr handle,
-                     ImageFile image)
+    private Graphics(IntPtr handle)
     {
         this.Handle = handle;
-        if (image is Metafile metafile)
-        {
-            //_metafileHolder = metafile.AddMetafileHolder();
-        }
     }
 
     ~Graphics()

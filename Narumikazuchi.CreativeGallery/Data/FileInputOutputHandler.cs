@@ -55,7 +55,7 @@ public sealed class FileInputOutputHandler
     }
 
     public async ValueTask StoreCreativeWork(CreativeWorkModel creativeWork,
-                                             ImageFile image,
+                                             Bitmap image,
                                              UserModel owner)
     {
         String fullpath = Path.Combine(s_Root.FullName, owner.Identifier.ToString());
@@ -87,7 +87,7 @@ public sealed class FileInputOutputHandler
                 width *= (Double)image.Width / image.Height;
             }
 
-            Result<ImageFile> thumbnail = image.GetThumbnailImage((Int32)width, (Int32)height);
+            Result<Bitmap> thumbnail = image.GetThumbnailImage((Int32)width, (Int32)height);
             if (thumbnail.IsOk is true)
             {
                 await using FileStream thumbnailStream = File.Create($"{fullpath}.thumbnail");
