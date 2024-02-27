@@ -18,6 +18,12 @@ public sealed record class TagModel
         init;
     }
 
+    public required ExplicitRating Rating
+    {
+        get;
+        set;
+    }
+
     public DateTime CreatedAt
     {
         get;

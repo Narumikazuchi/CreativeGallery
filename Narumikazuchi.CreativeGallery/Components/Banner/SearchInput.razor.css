@@ -1,0 +1,67 @@
+﻿div.search-input
+{
+    background-color: #fff;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.15);
+    margin: auto 0;
+    max-height: 2.5rem;
+    padding: 0;
+    position: relative;
+    width: 100%;
+}
+
+div.search-input input.input-box
+{
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0.5rem 3.5rem 0.5rem 1.75rem;
+    height: 100%;
+    width: 100%;
+}
+
+div.search-input ol.result-box
+{
+    box-sizing: border-box;
+    margin: 0;
+    max-height: 24rem;
+    opacity: 0;
+    overflow-y: auto;
+    padding: 0;
+}
+
+div.search-input ol.result-box li
+{
+    box-sizing: border-box;
+    cursor: pointer;
+    display: none;
+    list-style: none;
+    padding: 0.5rem;
+    margin: 0;
+    width: 100%;
+}
+
+div.search-input ol.result-box.active
+{
+    background-color: #fff;
+    box-shadow: 0px 5px 4px 3px rgba(0, 0, 0, 0.15);
+    opacity: 1;
+    padding: 0.25rem;
+    margin-top: -0.25rem;
+    pointer-events: auto;
+}
+
+div.search-input ol.result-box.active li
+{
+    display: block;
+}
+
+div.search-input ol.result-box.active li:hover
+{
+    background-color: #efefef;
+}

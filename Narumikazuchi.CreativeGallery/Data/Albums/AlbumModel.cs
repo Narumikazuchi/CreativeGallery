@@ -63,7 +63,7 @@ public sealed record class AlbumModel
         init;
     } = [];
 
-    public required Guid OwnerId
+    public required Guid OwnerIdentifier
     {
         get;
         init;

@@ -1,4 +1,13 @@
-﻿#blazor-error-ui
+﻿main.page
+{
+    display: inline-block;
+    max-height: calc(100vh - 5rem);
+    max-width: 100vw;
+    height: calc(100vh - 5rem);
+    width: 100vw;
+}
+
+#blazor-error-ui
 {
     background: lightyellow;
     bottom: 0;
