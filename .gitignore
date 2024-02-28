@@ -368,3 +368,6 @@ FodyWeavers.xsd
 .godot/
 
 *.[Dd]evelopment.*
+*.db
+*.db-shm
+*.db-wal
