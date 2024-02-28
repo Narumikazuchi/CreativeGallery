@@ -1,5 +1,6 @@
-![Logo](../release/logo.png)
+# Concept
+A web application which allows for presentation of creative works in the form of images in organized form.
 
-# Installation
-[![NuGet](https://img.shields.io/nuget/v/Narumikazuchi.svg)](https://www.nuget.org/packages/Narumikazuchi)  
-The installation can be simply done via installing the nuget package or by downloading the latest release here from github and referencing it in your project.
+#### Magic Files
+./DefaultProfile.png -> Default Profile Picture for a newly created account
+./Logo.png -> App Logo and Favicon of the webpage
