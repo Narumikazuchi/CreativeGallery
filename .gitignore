@@ -366,3 +366,5 @@ FodyWeavers.xsd
 
 # Godot 4+ specific ignores
 .godot/
+
+*.[Dd]evelopment.*
