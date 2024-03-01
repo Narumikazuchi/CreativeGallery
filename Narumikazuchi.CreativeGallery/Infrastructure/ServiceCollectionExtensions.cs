@@ -48,6 +48,7 @@ static public class ServiceCollectionExtensions
 
     static public void AddCoreServices(this IServiceCollection services)
     {
+        services.AddTransient<FileInputOutputHandler>();
         services.AddTransient<Translator>();
         services.AddTransient<UserProvider>();
     }

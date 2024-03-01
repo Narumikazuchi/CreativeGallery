@@ -1,4 +1,6 @@
-﻿namespace Narumikazuchi.CreativeGallery.Core;
+﻿using Narumikazuchi.CreativeGallery.Infrastructure;
+
+namespace Narumikazuchi.CreativeGallery.Core;
 
 public sealed partial class AppLogoProvider
 {
@@ -14,7 +16,7 @@ public sealed partial class AppLogoProvider
         Byte[] bytes = new Byte[stream.Length];
         _ = stream.Read(buffer: bytes);
         String data = Convert.ToBase64String(inArray: bytes);
-        s_LogoData = $"data:image/png;base64,{data}";
+        s_LogoData = data.ToPngImageSource();
 
         base.OnInitialized();
     }

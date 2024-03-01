@@ -16,7 +16,7 @@ public sealed partial class Header
         Byte[] bytes = new Byte[stream.Length];
         _ = stream.Read(buffer: bytes);
         String data = Convert.ToBase64String(inArray: bytes);
-        s_LogoData = $"data:image/png;base64,{data}";
+        s_LogoData = data.ToPngImageSource();
 
         base.OnInitialized();
     }

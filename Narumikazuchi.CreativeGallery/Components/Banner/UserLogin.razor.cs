@@ -10,7 +10,7 @@ public sealed partial class UserLogin
 
         Byte[] bytes = this.UserProvider.AuthenticatedUser.Value!.ProfilePicture;
         String data = Convert.ToBase64String(inArray: bytes);
-        this.ProfilePicture = $"data:image/png;base64,{data}";
+        this.ProfilePicture = data.ToPngImageSource();
         this.UserHasAdministrationAccess = true;
         this.Username = this.UserProvider.AuthenticatedUser.Value!.DisplayName;
 

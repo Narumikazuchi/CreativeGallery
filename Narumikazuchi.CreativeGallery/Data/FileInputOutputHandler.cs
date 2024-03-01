@@ -101,6 +101,23 @@ public sealed class FileInputOutputHandler
         }
     }
 
+    public Result<String> GetImageData(CreativeWorkModel creativeWork)
+    {
+        String fullpath = Path.Combine(s_Root.FullName, creativeWork.Owner.Identifier.ToString());
+        if (Directory.Exists(path: fullpath) is false)
+        {
+            _ = Directory.CreateDirectory(path: fullpath);
+            return new FileNotFoundException(message: "The specified resource does not exist.");
+        }
+
+        fullpath = Path.Combine(fullpath, creativeWork.Filename);
+        using FileStream stream = File.OpenRead(path: fullpath);
+        Byte[] bytes = new Byte[stream.Length];
+        _ = stream.Read(buffer: bytes);
+        String result = Convert.ToBase64String(inArray: bytes);
+        return result;
+    }
+
     static private DirectoryInfo s_Root = null!;
 
     private const String DATABASE_SECTION_KEY = "Database";
