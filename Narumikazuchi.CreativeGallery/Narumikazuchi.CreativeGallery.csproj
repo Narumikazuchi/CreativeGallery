@@ -70,4 +70,12 @@
 		<Using Include="System.Threading.Tasks" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Components\Card.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Components\Card.razor" />
+	</ItemGroup>
+
 </Project>

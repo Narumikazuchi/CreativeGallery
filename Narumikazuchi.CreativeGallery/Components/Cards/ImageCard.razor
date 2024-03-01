@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using Narumikazuchi.CreativeGallery.Data
+
+@inject FileInputOutputHandler FileHandler
+@inject NavigationManager Navigator
+
+@rendermode RenderMode.InteractiveServer
+
+<div
+    class="card"
+    @onclick=@this.RedirectToResource
+>
+    <img
+        src="@this.ImageData"
+        alt="Image"
+    />
+</div>

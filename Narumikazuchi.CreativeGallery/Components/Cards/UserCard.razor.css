@@ -1,0 +1,23 @@
+﻿.card
+{
+    cursor: pointer;
+    display: flex;
+    margin: 1.5rem;
+    width: 192px;
+    height: 192px;
+}
+
+.card > img
+{
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    object-fit: cover;
+    margin: auto;
+    max-width: 192px;
+    max-height: 192px;
+    transition: 0.3s ease;
+}
+
+.card > img:hover
+{
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
