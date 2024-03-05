@@ -86,6 +86,13 @@ public sealed class UserDatabaseContext : DatabaseContext
     {
         Optional<UserModel> result = await this.Context.Users.Include(entity => entity.Authentications)
                                                              .Include(entity => entity.FollowedByUsers)
+                                                             .Include(entity => entity.FollowsUsers)
+                                                             .Include(entity => entity.OwnedAlbums)
+                                                             .Include(entity => entity.OwnedWorks)
+                                                             .Include(entity => entity.LikedAlbums)
+                                                             .Include(entity => entity.LikedWorks)
+                                                             .Include(entity => entity.BookmarkedAlbums)
+                                                             .Include(entity => entity.BookmarkedWorks)
                                                              .FirstOrDefaultAsync(predicate: predicate,
                                                                                   cancellationToken: cancellationToken);
         return result;
@@ -99,26 +106,27 @@ public sealed class UserDatabaseContext : DatabaseContext
         return result;
     }
 
+    public async Task<Optional<UserModel>> LoadUserAsynchronously(Guid identifier,
+                                                                  CancellationToken cancellationToken = default)
+    {
+        Optional<UserModel> result = await this.Context.Users.Include(entity => entity.Authentications)
+                                                             .Include(entity => entity.FollowedByUsers)
+                                                             .Include(entity => entity.FollowsUsers)
+                                                             .Include(entity => entity.OwnedAlbums)
+                                                             .Include(entity => entity.OwnedWorks)
+                                                             .Include(entity => entity.LikedAlbums)
+                                                             .Include(entity => entity.LikedWorks)
+                                                             .Include(entity => entity.BookmarkedAlbums)
+                                                             .Include(entity => entity.BookmarkedWorks)
+                                                             .FirstOrDefaultAsync(entity => entity.Identifier == identifier,
+                                                                                  cancellationToken: cancellationToken);
+        return result;
+    }
+
     public async ValueTask MakeUserFollowCreatorAsynchronously(UserModel user,
                                                                UserModel creator,
                                                                CancellationToken cancellationToken = default)
     {
-        Optional<UserModel> userWithFollowed = await this.Context.Users.Include(entity => entity.FollowedByUsers)
-                                                                       .FirstOrDefaultAsync(entity => entity.Identifier == creator.Identifier,
-                                                                                            cancellationToken: cancellationToken);
-
-        Optional<UserModel> userWithFollows = await this.Context.Users.Include(entity => entity.FollowsUsers)
-                                                                      .FirstOrDefaultAsync(entity => entity.Identifier == user.Identifier,
-                                                                                           cancellationToken: cancellationToken);
-        if (userWithFollows.HasValue is false ||
-            userWithFollowed.HasValue is false)
-        {
-            return;
-        }
-
-        user = userWithFollows.Value;
-        creator = userWithFollowed.Value;
-
         user.FollowsUsers.Add(item: creator);
         creator.FollowedByUsers.Add(item: user);
 
