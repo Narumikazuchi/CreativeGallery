@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Components.Web
+@using Narumikazuchi.CreativeGallery.Components.Cards
+@using Narumikazuchi.CreativeGallery.Data.Albums
+@using Narumikazuchi.CreativeGallery.Data.CreativeWorks
+@using Narumikazuchi.CreativeGallery.Data.Users
+
+@inject UserDatabaseContext UsersContext;
+@inject CreativeWorkDatabaseContext CreativeWorksContext;
+@inject AlbumDatabaseContext AlbumsContext;
+
+@rendermode RenderMode.InteractiveServer
+
+<div
+    class="card-list"
+>
+    <nav>
+        @foreach (Object model in m_Models)
+        {
+            if (model is UserModel user)
+            {
+                <UserCard
+                    Model=@user
+                />
+            }
+            else if (model is CreativeWorkModel creativeWork)
+            {
+                <ImageCard
+                    Model=@creativeWork
+                />
+            }
+            else if (model is AlbumModel album)
+            {
+                <AlbumCard
+                    Model=@album
+                />
+            }
+        }
+    </nav>
+</div>

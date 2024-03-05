@@ -14,22 +14,6 @@ public sealed class AlbumDatabaseContext : DatabaseContext
                                                            AlbumModel album,
                                                            CancellationToken cancellationToken = default)
     {
-        Optional<AlbumModel> albumWithLiked = await this.Context.Albums.Include(entity => entity.LikedByUsers)
-                                                                       .FirstOrDefaultAsync(entity => entity.Identifier == album.Identifier,
-                                                                                            cancellationToken: cancellationToken);
-
-        Optional<UserModel> userWithLikes = await this.Context.Users.Include(entity => entity.LikedAlbums)
-                                                                    .FirstOrDefaultAsync(entity => entity.Identifier == user.Identifier,
-                                                                                         cancellationToken: cancellationToken);
-        if (albumWithLiked.HasValue is false ||
-            userWithLikes.HasValue is false)
-        {
-            return;
-        }
-
-        user = userWithLikes.Value;
-        album = albumWithLiked.Value;
-
         user.LikedAlbums.Add(item: album);
         album.LikedByUsers.Add(item: user);
 
@@ -56,5 +40,17 @@ public sealed class AlbumDatabaseContext : DatabaseContext
             _ = await this.Context.SearchQuery.AddAsync(entity: searchResult.Value!,
                                                         cancellationToken: cancellationToken);
         }
+    }
+
+    public async Task<Optional<AlbumModel>> LoadAlbumAsynchronously(Guid identifier,
+                                                                    CancellationToken cancellationToken = default)
+    {
+        Optional<AlbumModel> result = await this.Context.Albums.Include(entity => entity.Works)
+                                                               .Include(entity => entity.LikedByUsers)
+                                                               .Include(entity => entity.BookmarkedByUsers)
+                                                               .Include(entity => entity.Owner)
+                                                               .FirstOrDefaultAsync(entity => entity.Identifier == identifier,
+                                                                                    cancellationToken: cancellationToken);
+        return result;
     }
 }
